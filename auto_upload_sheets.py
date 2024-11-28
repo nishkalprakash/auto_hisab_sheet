@@ -10,8 +10,13 @@ from lib.hisab_func import *
 # from lib.hisab_func import lprint
 
 
-def auto_update(asset_name, conn, sh, ws_name="JBP"):
-    df = get_df(asset_name, conn=conn)
+def auto_update(asset_name, conn, sh, ws_name="JBP",allow_skip=True):
+    extra_filter = ""
+    if asset_name == "Sachin mama":
+        extra_filter = "and  WDATE > '2024-05-01'"
+        allow_skip=False
+    # else:
+    df = get_df(asset_name,extra_filter=extra_filter, conn=conn,allow_skip=allow_skip)
     if df is None:
         lprint("DATA ALREADY UP TO DATE, SKIPPING")
         raise "UPDATED"
@@ -44,14 +49,15 @@ if __name__ == "__main__":
                 # "Alka": "Alka", 
                 # "Mummy": "Mummy",
                 # "Imran":"Imu",
-                "Debasis Sir":"DSm",
+                # "Debasis Sir":"DSm",
+                "Sachin mama":"Sachin mama"
                 # "Soumya":"Somo",
                 # "Anshi":"Anshi",
                 # "DJ":"DJ",
                 }
 
-            conn = get_db_conn(skip=True)
-            # conn = get_db_conn(skip=False)
+            conn = get_db_conn(allow_skip=False)
+            # conn = get_db_conn(allow_skip=False)
             sh = auth_pyghseets()
             for ws_name, asset_name in ws_title_asset_l.items():
                 lprint(f"Running for {ws_name}".center(80,"*"))

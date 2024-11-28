@@ -5,7 +5,7 @@ from lib.hisab_func import *
 # %% For NIKKI Di
 
 # q = get_q_placeholder().format(asset_name='Nikki',extra_filter="")
-df=get_df(asset_name='Nikki',update=False)
+df=get_df(asset_name='Nikki',allow_skip=False)
 
 df[df.toAccount=='Mummy (Loan)']
 #%% Filter new entries and remove trans with Mummy (Loan) account
@@ -40,7 +40,7 @@ time.sleep(10)
 # %% For MUMMY
 
 # q = get_q_placeholder().format(asset_name='Mummy',extra_filter="")
-df=get_df(asset_name='Mummy',update=False)
+df=get_df(asset_name='Mummy',allow_skip=False)
 
 df[df.toAccount=='Mummy (Doctor)']
 #%% Filter new entries and remove trans with Mummy (Loan) account

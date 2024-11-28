@@ -134,7 +134,7 @@ fun_l=[
 
 for shrt_name,asset_name in asset_d.items():
     # running the functions and saving the files by its var names -_-
-    df=get_df(asset_name=asset_name,update=False)
+    df=get_df(asset_name=asset_name,allow_skip=False)
     for fun in fun_l:
         fname=Path('res')/f'{shrt_name}.xlsx'
         fn=fun.__name__

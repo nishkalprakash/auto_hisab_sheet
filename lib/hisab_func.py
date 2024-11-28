@@ -20,13 +20,13 @@ def get_latest_db_name():
     )
 
 
-def get_db_conn(db_name=None, skip=True):
+def get_db_conn(db_name=None, allow_skip=True):
     """Gets the latest DB from gdrive
         # NEEDS GDRIVE FOR DESKTOP RUNNING
 
     Args:
         db_name (str, optional): Name of the MMBAK file including the extension (eg. "MMAuto[FO220117](17-01-22-104255).mmbak"). Defaults to "".
-        skip (bool, optional): If True: Checks db_name with contents of "last_db_fetched.txt", if matched: returns False. Defaults to True.
+        allow_skip (bool, optional): If True: Checks db_name with contents of "last_db_fetched.txt", if matched: returns False. Defaults to True.
 
     Returns:
         sqlite3.connect: sqlite database connection
@@ -35,7 +35,7 @@ def get_db_conn(db_name=None, skip=True):
 
     if db_name is None:
         db_name = get_latest_db_name()
-    if skip:
+    if allow_skip:
         if (
             Path("last_db_fetched.txt").exists()
             and Path(db_name).name == Path("last_db_fetched.txt").read_text()
@@ -83,14 +83,14 @@ def get_q_placeholder(asset_name=None, extra_filter=""):
     return q
 
 
-def get_df(asset_name, extra_filter="",conn=None,db_name=None,update=True):
+def get_df(asset_name, extra_filter="",conn=None,db_name=None,allow_skip=True):
     multi=False
     if type(asset_name) == list:
         asset_l=asset_name
         asset_name='","'.join(asset_name)
         multi=True
     q=get_q_placeholder(asset_name,extra_filter)
-    if conn is None and (conn:=get_db_conn(db_name,update)) is None:
+    if conn is None and (conn:=get_db_conn(db_name,allow_skip)) is None:
         return None
     df=pd.read_sql(
         q, conn, parse_dates=["Date"], index_col="AID", coerce_float=True

@@ -1,1 +1,1 @@
-CreateObject("Wscript.Shell").Run "cmd /c python D:/Downloads/DarKSkuLL/Hisab/auto_upload_sheets.py", 1, True
+CreateObject("Wscript.Shell").Run "cmd /c D:/anaconda3/python.exe D:/Downloads/DarKSkuLL/Hisab/auto_upload_sheets.py", 1, True
